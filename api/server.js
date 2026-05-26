@@ -1,17 +1,27 @@
 const express = require("express");
 const axios = require("axios");
+const path = require("path");
 
 const app = express();
 
 app.use(express.json());
-app.use(express.static("public"));
 
 const API = "https://technoworks.com.br";
 const RA = "123456";
 
-// =====================
+// ======================
+// FRONTEND
+// ======================
+
+app.use(express.static(path.join(__dirname, "../public")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+// ======================
 // LISTAR
-// =====================
+// ======================
 
 app.get("/api/clientes", async (req, res) => {
 
@@ -33,10 +43,9 @@ app.get("/api/clientes", async (req, res) => {
     }
 });
 
-
-// =====================
+// ======================
 // CRIAR
-// =====================
+// ======================
 
 app.post("/api/clientes", async (req, res) => {
 
@@ -60,10 +69,9 @@ app.post("/api/clientes", async (req, res) => {
     }
 });
 
-
-// =====================
+// ======================
 // EDITAR
-// =====================
+// ======================
 
 app.put("/api/clientes/:id", async (req, res) => {
 
@@ -89,10 +97,9 @@ app.put("/api/clientes/:id", async (req, res) => {
     }
 });
 
-
-// =====================
+// ======================
 // EXCLUIR
-// =====================
+// ======================
 
 app.delete("/api/clientes/:id", async (req, res) => {
 
@@ -116,7 +123,4 @@ app.delete("/api/clientes/:id", async (req, res) => {
     }
 });
 
-
-app.listen(3000, () => {
-    console.log("Servidor rodando");
-});
+module.exports = app;
